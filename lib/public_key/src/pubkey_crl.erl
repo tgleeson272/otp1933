@@ -23,7 +23,7 @@
 -include("public_key.hrl").
 
 -export([validate/7, init_revokation_state/0, fresh_crl/3, verify_crl_signature/4,
-	 is_delta_crl/1, combines/2, match_one/2]).
+	 is_delta_crl/1, combines/2, match_one/2, dp_crlissuer_to_issuer/1]).
 
 -record(userstate, {dpcrls,
 		    idp
@@ -333,6 +333,7 @@ verify_issuer_and_scope(#'OTPCertificate'{tbsCertificate = TBSCert}= Cert,
     end.
 
 dp_crlissuer_to_issuer(DPCRLIssuer) ->
+     %% Assume the cRLIssuer SEQUENCE is of length exactly 1
      [{directoryName, Issuer}] = pubkey_cert_records:transform(DPCRLIssuer, decode),
      Issuer.
 

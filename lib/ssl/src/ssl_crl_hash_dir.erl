@@ -33,7 +33,7 @@ lookup(#'DistributionPoint'{cRLIssuer = CRLIssuer} = DP, CertIssuer, CRLDbInfo) 
 		%% indicate a CRL issuer, use the certificate issuer.
 		CertIssuer;
 	    _ ->
-		CRLIssuer
+		pubkey_crl:dp_crlissuer_to_issuer(CRLIssuer)
 	end,
     %% Find all CRLs for this issuer, and return those that match the
     %% given distribution point.
